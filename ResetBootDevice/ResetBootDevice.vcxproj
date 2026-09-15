@@ -99,6 +99,9 @@
     <CctkPayload Include="$(ProjectDir)resources\dchbas64.dll" />
     <CctkPayload Include="$(ProjectDir)resources\libcrypto.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\x64\Debug\ResetBootDevice.exe" />
+  </ItemGroup>
   <PropertyGroup>
     <CctkVCRuntime Condition="'$(VCToolsRedistDir)' != ''">$(VCToolsRedistDir)x64\Microsoft.VC145.CRT\vcruntime140.dll</CctkVCRuntime>
     <CctkVCRuntime Condition="'$(CctkVCRuntime)' == ''">$(VCInstallDir)Redist\MSVC\$(VCToolsVersion)\x64\Microsoft.VC145.CRT\vcruntime140.dll</CctkVCRuntime>
