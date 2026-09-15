@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{5bcacf05-7321-42f2-b1d3-dd3aa37440cd}</ProjectGuid>
+    <RootNamespace>ResetBootDevice</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+    <Manifest>
+      <EnableSegmentHeap>true</EnableSegmentHeap>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+    <Manifest>
+      <EnableSegmentHeap>true</EnableSegmentHeap>
+    </Manifest>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ResetBootDevice.rc" />
+    <ResourceCompile Include="resources.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CctkPayload Include="$(ProjectDir)resources\cctk.exe" />
+    <CctkPayload Include="$(ProjectDir)resources\ABI.dll" />
+    <CctkPayload Include="$(ProjectDir)resources\BIOSIntf.dll" />
+    <CctkPayload Include="$(ProjectDir)resources\dchbas64.dll" />
+    <CctkPayload Include="$(ProjectDir)resources\libcrypto.dll" />
+  </ItemGroup>
+  <PropertyGroup>
+    <CctkVCRuntime Condition="'$(VCToolsRedistDir)' != ''">$(VCToolsRedistDir)x64\Microsoft.VC145.CRT\vcruntime140.dll</CctkVCRuntime>
+    <CctkVCRuntime Condition="'$(CctkVCRuntime)' == ''">$(VCInstallDir)Redist\MSVC\$(VCToolsVersion)\x64\Microsoft.VC145.CRT\vcruntime140.dll</CctkVCRuntime>
+    <WinRePackageDir>$(OutDir)WinRE\</WinRePackageDir>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <Target Name="CopyWinRePayload" AfterTargets="Build;Rebuild">
+    <Error Condition="!Exists('%(CctkPayload.Identity)')" Text="Required Dell CCTK payload file is missing: %(CctkPayload.Identity)" />
+    <Error Condition="!Exists('$(CctkVCRuntime)')" Text="The x64 Visual C++ runtime was not found at $(CctkVCRuntime). Install the v145 x64 C++ tools/redist component." />
+    <MakeDir Directories="$(OutDir)resources;$(WinRePackageDir)resources" />
+    <Copy SourceFiles="@(CctkPayload)" DestinationFolder="$(OutDir)resources" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CctkVCRuntime)" DestinationFolder="$(OutDir)resources" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(WinRePackageDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(CctkPayload)" DestinationFolder="$(WinRePackageDir)resources" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CctkVCRuntime)" DestinationFolder="$(WinRePackageDir)resources" SkipUnchangedFiles="true" />
+  </Target>
+  <Target Name="CleanWinRePayload" BeforeTargets="Clean">
+    <RemoveDir Directories="$(WinRePackageDir)" />
+  </Target>
+</Project>

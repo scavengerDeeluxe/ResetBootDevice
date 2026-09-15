@@ -1,0 +1,19 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/Solution Items/" />
+  <Folder Name="/Solution Items/resources/">
+    <File Path="ResetBootDevice/resources/ABI.dll" />
+    <File Path="ResetBootDevice/resources/BIOSIntf.dll" />
+    <File Path="ResetBootDevice/resources/cctk.exe" />
+    <File Path="ResetBootDevice/resources/cctk_x86_64_winpe_10.bat" />
+    <File Path="ResetBootDevice/resources/cctk_x86_64_winpe_11.bat" />
+    <File Path="ResetBootDevice/resources/dchapi64.dll" />
+    <File Path="ResetBootDevice/resources/dchbas64.dll" />
+    <File Path="ResetBootDevice/resources/file" />
+    <File Path="ResetBootDevice/resources/libcrypto.dll" />
+    <File Path="ResetBootDevice/resources/libssl.dll" />
+  </Folder>
+  <Project Path="ResetBootDevice/ResetBootDevice.vcxproj" Id="5bcacf05-7321-42f2-b1d3-dd3aa37440cd" />
+</Solution>

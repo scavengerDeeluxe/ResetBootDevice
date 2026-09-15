@@ -1,0 +1,13 @@
+// Resource script to embed required binaries into the EXE
+
+/* Embed as RCDATA so we can extract at runtime */
+R_CCTK_EXE RCDATA "resources\\cctk.exe"
+R_ABI_DLL RCDATA "resources\\ABI.dll"
+R_BIOSINTF_DLL RCDATA "resources\\BIOSIntf.dll"
+R_DCHAPI64_DLL RCDATA "resources\\dchapi64.dll"
+R_DCHBAS64_DLL RCDATA "resources\\dchbas64.dll"
+R_LIBCRYPTO_DLL RCDATA "resources\\libcrypto.dll"
+R_LIBSSL_DLL RCDATA "resources\\libssl.dll"
+R_CCTK_BAT10 RCDATA "resources\\cctk_x86_64_winpe_10.bat"
+R_CCTK_BAT11 RCDATA "resources\\cctk_x86_64_winpe_11.bat"
+R_FILE_TXT RCDATA "resources\\file"
